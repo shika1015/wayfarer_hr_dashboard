@@ -384,7 +384,6 @@
   <div class="tab" onclick="switchTab('people')">People Distribution</div>
   <div class="tab" onclick="switchTab('orgchart')">Org Chart</div>
   <div class="tab" onclick="switchTab('tenure')">Tenure & Age</div>
-  <div class="tab" onclick="switchTab('attrition')">Attrition</div>
 </div>
 
 <div class="main">
@@ -635,76 +634,7 @@
 
 
 
-  <!-- ===== ATTRITION TAB ===== -->
-  <div class="panel" id="panel-attrition">
-    <div class="page-header">
-      <div class="page-header-text">
-        <h2>Attrition Analysis</h2>
-        <p>Departures, reasons & trends across all employment history</p>
-      </div>
-    </div>
 
-    <div class="stats-row">
-      <div class="stat-card r">
-        <div class="stat-label">Total Departures</div>
-        <div class="stat-value" id="att-total">57</div>
-        <div class="stat-sub">Full-Time members since 2021</div>
-      </div>
-      <div class="stat-card b">
-        <div class="stat-label">Overall Attrition Rate</div>
-        <div class="stat-value" id="att-rate">37.0%</div>
-        <div class="stat-sub">of 154 full-time ever employed</div>
-      </div>
-      <div class="stat-card y">
-        <div class="stat-label">2025 Departures</div>
-        <div class="stat-value" id="att-2025">10</div>
-        <div class="stat-sub">departures in 2024 (peak year)</div>
-      </div>
-      <div class="stat-card p">
-        <div class="stat-label">Avg Tenure at Departure</div>
-        <div class="stat-value" id="att-tenure">10.9</div>
-        <div class="stat-sub">months average at departure</div>
-      </div>
-      <div class="stat-card g">
-        <div class="stat-label">Early Exits (&lt;6mo)</div>
-        <div class="stat-value" id="att-early">11</div>
-        <div class="stat-sub">19% left within 6 months</div>
-      </div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-title">Monthly Departures <span>Full-Time · 2024–2026 Trend</span></div>
-        <canvas id="chart-att-monthly"></canvas>
-      </div>
-      <div class="card">
-        <div class="card-title">Departure by Year <span>Annual Attrition Volume</span></div>
-        <canvas id="chart-att-yearly"></canvas>
-      </div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-title">Tenure at Departure <span>How Long Before They Left</span></div>
-        <canvas id="chart-att-tenure"></canvas>
-      </div>
-      <div class="card">
-        <div class="card-title">Departure Reasons <span>Top 10 Reasons</span></div>
-        <canvas id="chart-att-reasons"></canvas>
-      </div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-title">Tenure Cohort at Departure <span>Length of Service When Left</span></div>
-        <canvas id="chart-att-tenure2"></canvas>
-      </div>
-      <div class="card">
-        <div class="card-title">By Team / Cluster <span>Highest Turnover Areas</span></div>
-        <canvas id="chart-att-dept"></canvas>
-      </div>
-    </div>
-  </div>
 </div><!-- /main -->
 
 <script>
@@ -878,7 +808,7 @@ function init() {
 
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach((t,i)=>{
-    const names=['overview','people','orgchart','tenure','attrition'];
+    const names=['overview','people','orgchart','tenure'];
     t.classList.toggle('active', names[i]===name);
   });
   document.querySelectorAll('.panel').forEach(p=>{
@@ -891,7 +821,6 @@ function switchTab(name) {
     if (name === 'people') renderPeopleCharts();
     if (name === 'orgchart') renderOrgChartPanel();
     if (name === 'tenure') renderTenurePanel();
-    if (name === 'attrition') renderAttritionPanel();
   }
 }
 
@@ -1134,34 +1063,9 @@ function renderNationality() {
 
 
 // =====================================================================
-// ATTRITION PANEL
+
 // =====================================================================
-const ATT = {"total": 57, "active": 97, "totalEver": 154, "attritionRate": 37.0, "avgTenureAtLeave": 10.9, "early": 11, "earlyPct": 19.3, "year2025": 8, "byMonth": {"2024-01": 1, "2024-02": 1, "2024-04": 2, "2024-06": 2, "2024-09": 2, "2024-11": 1, "2024-12": 1, "2025-03": 3, "2025-06": 2, "2025-09": 1, "2025-11": 2, "2026-01": 1, "2026-02": 1}, "byYear": {"2021": 4, "2022": 3, "2023": 7, "2024": 10, "2025": 8, "2026": 2}, "byReason": {"Not Specified": 35, "Voluntary": 6, "Company Initiated": 4, "Personal Reasons": 3, "Other Voluntary": 3, "Voluntary - Career Change": 3, "Voluntary - Other Job": 2, "Voluntary - Relocation": 1}, "byTenure": {"<6mo": 11, "6-12mo": 9, "1-2yr": 11, "2-4yr": 3}, "byDept": {"Indirect Overhead": 10, "Kabin(s) Cluster 1": 6, "Osaka(s)": 5, "Kabin(s) Cluster 2": 4, "WHKS Cluster": 4, "Kabin Kyoto": 3}};
 
-function renderAttritionPanel() {
-  // Monthly trend
-  const mKeys = Object.keys(ATT.byMonth);
-  charts.attMonthly = makeBar('chart-att-monthly', mKeys.map(k=>k.replace('-','/')), Object.values(ATT.byMonth), '#f07a7a');
-
-  // Yearly
-  charts.attYearly = makeBar('chart-att-yearly', Object.keys(ATT.byYear), Object.values(ATT.byYear), PALETTE);
-
-  // Tenure at departure
-  const tKeys = ['<6mo','6-12mo','1-2yr','2-4yr'];
-  charts.attTenure = makeBar('chart-att-tenure', tKeys, tKeys.map(k=>ATT.byTenure[k]||0), ['#f07a7a','#f0c87a','#7bc8f0','#c8f07a']);
-
-  // Reasons (top 8, skip Not Specified)
-  const reasons = Object.entries(ATT.byReason).filter(([k])=>k!=='Not Specified').slice(0,8);
-  charts.attReasons = makeBar('chart-att-reasons', reasons.map(x=>x[0]), reasons.map(x=>x[1]), PALETTE, true);
-
-  // Tenure cohort doughnut (second view)
-  const tKeys2 = Object.keys(ATT.byTenure);
-  charts.attTenure2 = makeDoughnut('chart-att-tenure2', tKeys2, tKeys2.map(k=>ATT.byTenure[k]||0), ['#f07a7a','#f0c87a','#7bc8f0','#c8f07a']);
-
-  // By dept
-  const depts = Object.entries(ATT.byDept).sort((a,b)=>b[1]-a[1]);
-  charts.attDept = makeBar('chart-att-dept', depts.map(x=>x[0]), depts.map(x=>x[1]), PALETTE, true);
-}
 
 
 
