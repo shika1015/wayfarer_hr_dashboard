@@ -144,6 +144,7 @@
       <div class="stat-card p"><div class="stat-label">Avg. Tenure</div><div class="stat-value" id="kpi-tenure">—</div><div class="stat-sub">months</div></div>
       <div class="stat-card r"><div class="stat-label">Avg. Age</div><div class="stat-value" id="kpi-age">—</div><div class="stat-sub">years</div></div>
       <div class="stat-card b"><div class="stat-label">Nationalities</div><div class="stat-value" id="kpi-nations">—</div><div class="stat-sub">countries represented</div></div>
+      <div class="stat-card r"><div class="stat-label">FT Turnover (12mo)</div><div class="stat-value" id="kpi-turnover">—</div><div class="stat-sub" id="kpi-turnover-sub">Rolling 12 months</div></div>
     </div>
     <div class="grid-2-1">
       <div class="card"><div class="card-title">Employment Type Mix <span>Headcount Breakdown</span></div><canvas id="chart-emptype"></canvas></div>
@@ -347,6 +348,9 @@ function renderKPIs() {
   document.getElementById('kpi-age').textContent = S.kpi.avgAge;
   const natEntries = S.nationality || {};
   document.getElementById('kpi-nations').textContent = Object.keys(natEntries).length;
+  const rt = S.rollingTurnover || {};
+  document.getElementById('kpi-turnover').textContent = rt.rate !== undefined ? rt.rate + '%' : '—';
+  document.getElementById('kpi-turnover-sub').textContent = (rt.resigned12m || 0) + ' resigned / ' + (rt.currentFT || 0) + ' FT';
 }
 
 function renderOverviewCharts() {
