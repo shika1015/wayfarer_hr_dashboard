@@ -212,11 +212,31 @@
   </div>
 </div>
 
+
+<div class="panel" id="panel-turnover">
+  <div class="page-header"><div class="page-header-text"><h2>FT Turnover</h2><p>Full-time & executive employee attrition — annual rates and rolling 12-month view</p></div></div>
+  <div class="stats-row">
+    <div class="stat-card r"><div class="stat-label">Rolling 12-Month Rate</div><div class="stat-value" id="tv-rolling">—</div><div class="stat-sub">Jul 2025 – Jul 2026</div></div>
+    <div class="stat-card y"><div class="stat-label">FT Resigned (12mo)</div><div class="stat-value" id="tv-resigned12">—</div><div class="stat-sub">Full-time departures</div></div>
+    <div class="stat-card b"><div class="stat-label">Current FT Headcount</div><div class="stat-value" id="tv-currentft">—</div><div class="stat-sub">Active 正社員 + 役員</div></div>
+    <div class="stat-card g"><div class="stat-label">Latest Annual Rate</div><div class="stat-value" id="tv-latest">—</div><div class="stat-sub">2026 YTD</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="card" style="grid-column:1/-1"><div class="card-title">Annual FT Turnover Rate <span>% of FT headcount who resigned each year</span></div><canvas id="chart-turnover-annual" style="max-height:260px"></canvas></div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><div class="card-title">Resignations by Year <span>Headcount & departure count</span></div><canvas id="chart-turnover-counts"></canvas></div>
+    <div class="card"><div class="card-title">Trend Note <span></span></div>
+      <div id="turnover-notes" style="padding:12px 4px;line-height:1.7;color:var(--text);font-size:14px"></div>
+    </div>
+  </div>
+</div>
+
 <script>
 // =====================================================================
 // DATA — Updated 2026/06/02 from SmartHR export
 // =====================================================================
-const STATS = {"kpi": {"total": 148, "fullTime": 83, "ftPct": "56%", "partContract": 65, "ptPct": "44%", "avgTenure": 20, "avgAge": 32}, "empType": {"Full-Time": 81, "Executive": 2, "Part-Time": 49, "Contract": 14, "Dispatch": 2}, "location": {"Kyoto Office": 24, "Kyoto Hotel(s)": 69, "Tokyo HQ": 9, "Osaka Hotel(s)": 19, "Tokyo Hotel(s)": 7, "Kabin Kyoto": 7, "GRZE (Cafe)": 1}, "hireByYear": {"2021": 8, "2022": 4, "2023": 21, "2024": 34, "2025": 47, "2026": 34}, "functionSplit": {"Operations": 106, "Indirect Overhead": 39}, "deptTop": {"Lans": 106, "Andrea": 17, "Javier": 9, "Executive Office": 6, "Mike": 6, "Shika": 2, "Tokyo HQ": 1}, "nationality": {"Japan 🇯🇵": 31, "Philippines 🇵🇭": 13, "USA 🇺🇸": 11, "France 🇫🇷": 8, "Argentina 🇦🇷": 5, "Chile 🇨🇱": 5, "India 🇮🇳": 5, "Sri Lanka 🇱🇰": 5, "Pakistan 🇵🇰": 4, "Italy 🇮🇹": 3, "Bangladesh 🇧🇩": 3, "Uganda 🇺🇬": 3, "Spain 🇪🇸": 3, "Ethiopia 🇪🇹": 3, "Mexico 🇲🇽": 3, "China 🇨🇳": 3, "Germany 🇩🇪": 3, "Indonesia 🇮🇩": 3, "Canada 🇨🇦": 2, "UK 🇬🇧": 2, "Nepal 🇳🇵": 2, "Thailand 🇹🇭": 2, "Peru 🇵🇪": 2, "Madagascar 🇲🇬": 2, "Nigeria 🇳🇬": 2, "Netherlands 🇳🇱": 2, "Cameroon 🇨🇲": 2, "Taiwan 🇹🇼": 1, "Hungary 🇭🇺": 1, "Venezuela 🇻🇪": 1, "Portugal 🇵🇹": 1, "Poland 🇵🇱": 1, "New Zealand 🇳🇿": 1, "Singapore 🇸🇬": 1, "Kenya 🇰🇪": 1, "Slovakia 🇸🇰": 1, "Ukraine 🇺🇦": 1, "Turkey 🇹🇷": 1, "Rwanda 🇷🇼": 1, "Ghana 🇬🇭": 1, "Brazil 🇧🇷": 1, "Australia 🇦🇺": 1, "Other": 1}, "dept2": {"Indirect Overhead": 45, "Kabin(s) Cluster 1": 25, "Kabin(s) Cluster 2": 18, "WHKS Cluster": 13, "Kabin Kyoto": 12, "Osaka(s)": 10, "Tokyo Cluster": 5, "Wayfarer Matsu": 5}, "role2": {"OP - Accommodation": 94, "IO - Finance": 10, "IO - IT": 10, "IO - Marketing": 7, "OP - KRFT CAFE": 5, "IO - TXP": 4, "OP - KRFT BAR": 4, "IO - Revenue": 3, "IO - People": 3, "OP - GRZE": 2}, "dept2All": {"Indirect Overhead": 45, "Kabin(s) Cluster 2": 18, "Kabin(s) Cluster 1": 25, "Osaka(s)": 10, "Kabin Kyoto": 12, "Tokyo Cluster": 5, "WHKS Cluster": 13, "Kabin(s)": 2, "Wayfarer Matsu": 5, "KRFT (Coffee)": 2, "Kabin Machi": 2, "Wayfarer Shinsaibashi": 4, "Kabin Taka": 1, "KRFT (Bar)": 2}, "ageBuckets": {"<25": 17, "25-29": 41, "30-34": 45, "35-39": 26, "40-44": 10, "45-49": 3, "50+": 6}, "tenureKpi": {"new": 32, "dev": 60, "est": 47, "sen": 9, "median": 17}, "tenureCohort": {"0-6mo": 32, "6-24mo": 60, "2-4yr": 47, "4+yr": 9}, "hireRecent": {"2025-01": 6, "2025-02": 2, "2025-03": 2, "2025-04": 4, "2025-05": 5, "2025-06": 4, "2025-07": 3, "2025-08": 2, "2025-09": 2, "2025-10": 2, "2025-11": 6, "2025-12": 9, "2026-01": 2, "2026-02": 3, "2026-03": 5, "2026-04": 9, "2026-05": 8, "2026-06": 4, "2026-07": 3}, "natCount": 43, "totalEver": 148};
+const STATS = {"kpi": {"total": 148, "fullTime": 83, "ftPct": "56%", "partContract": 65, "ptPct": "44%", "avgTenure": 20, "avgAge": 32}, "empType": {"Full-Time": 81, "Executive": 2, "Part-Time": 49, "Contract": 14, "Dispatch": 2}, "location": {"Kyoto Office": 24, "Kyoto Hotel(s)": 69, "Tokyo HQ": 9, "Osaka Hotel(s)": 19, "Tokyo Hotel(s)": 7, "Kabin Kyoto": 7, "GRZE (Cafe)": 1}, "hireByYear": {"2021": 8, "2022": 4, "2023": 21, "2024": 34, "2025": 47, "2026": 34}, "functionSplit": {"Operations": 106, "Indirect Overhead": 39}, "deptTop": {"Lans": 106, "Andrea": 17, "Javier": 9, "Executive Office": 6, "Mike": 6, "Shika": 2, "Tokyo HQ": 1}, "nationality": {"Japan 🇯🇵": 31, "Philippines 🇵🇭": 13, "USA 🇺🇸": 11, "France 🇫🇷": 8, "Argentina 🇦🇷": 5, "Chile 🇨🇱": 5, "India 🇮🇳": 5, "Sri Lanka 🇱🇰": 5, "Pakistan 🇵🇰": 4, "Italy 🇮🇹": 3, "Bangladesh 🇧🇩": 3, "Uganda 🇺🇬": 3, "Spain 🇪🇸": 3, "Ethiopia 🇪🇹": 3, "Mexico 🇲🇽": 3, "China 🇨🇳": 3, "Germany 🇩🇪": 3, "Indonesia 🇮🇩": 3, "Canada 🇨🇦": 2, "UK 🇬🇧": 2, "Nepal 🇳🇵": 2, "Thailand 🇹🇭": 2, "Peru 🇵🇪": 2, "Madagascar 🇲🇬": 2, "Nigeria 🇳🇬": 2, "Netherlands 🇳🇱": 2, "Cameroon 🇨🇲": 2, "Taiwan 🇹🇼": 1, "Hungary 🇭🇺": 1, "Venezuela 🇻🇪": 1, "Portugal 🇵🇹": 1, "Poland 🇵🇱": 1, "New Zealand 🇳🇿": 1, "Singapore 🇸🇬": 1, "Kenya 🇰🇪": 1, "Slovakia 🇸🇰": 1, "Ukraine 🇺🇦": 1, "Turkey 🇹🇷": 1, "Rwanda 🇷🇼": 1, "Ghana 🇬🇭": 1, "Brazil 🇧🇷": 1, "Australia 🇦🇺": 1, "Other": 1}, "dept2": {"Indirect Overhead": 45, "Kabin(s) Cluster 1": 25, "Kabin(s) Cluster 2": 18, "WHKS Cluster": 13, "Kabin Kyoto": 12, "Osaka(s)": 10, "Tokyo Cluster": 5, "Wayfarer Matsu": 5}, "role2": {"OP - Accommodation": 94, "IO - Finance": 10, "IO - IT": 10, "IO - Marketing": 7, "OP - KRFT CAFE": 5, "IO - TXP": 4, "OP - KRFT BAR": 4, "IO - Revenue": 3, "IO - People": 3, "OP - GRZE": 2}, "dept2All": {"Indirect Overhead": 45, "Kabin(s) Cluster 2": 18, "Kabin(s) Cluster 1": 25, "Osaka(s)": 10, "Kabin Kyoto": 12, "Tokyo Cluster": 5, "WHKS Cluster": 13, "Kabin(s)": 2, "Wayfarer Matsu": 5, "KRFT (Coffee)": 2, "Kabin Machi": 2, "Wayfarer Shinsaibashi": 4, "Kabin Taka": 1, "KRFT (Bar)": 2}, "ageBuckets": {"<25": 17, "25-29": 41, "30-34": 45, "35-39": 26, "40-44": 10, "45-49": 3, "50+": 6}, "tenureKpi": {"new": 32, "dev": 60, "est": 47, "sen": 9, "median": 17}, "tenureCohort": {"0-6mo": 32, "6-24mo": 60, "2-4yr": 47, "4+yr": 9}, "hireRecent": {"2025-01": 6, "2025-02": 2, "2025-03": 2, "2025-04": 4, "2025-05": 5, "2025-06": 4, "2025-07": 3, "2025-08": 2, "2025-09": 2, "2025-10": 2, "2025-11": 6, "2025-12": 9, "2026-01": 2, "2026-02": 3, "2026-03": 5, "2026-04": 9, "2026-05": 8, "2026-06": 4, "2026-07": 3}, "natCount": 43, "totalEver": 148, "annualTurnover": {"2021": {"resigned": 4, "headcount": 19, "rate": 21.1}, "2022": {"resigned": 3, "headcount": 28, "rate": 10.7}, "2023": {"resigned": 7, "headcount": 68, "rate": 10.3}, "2024": {"resigned": 10, "headcount": 98, "rate": 10.2}, "2025": {"resigned": 8, "headcount": 113, "rate": 7.1}, "2026": {"resigned": 8, "headcount": 118, "rate": 6.8}}, "rollingTurnover": {"resigned12m": 10, "currentFT": 83, "rate": 12.0}};
 
 let EMPLOYEES = [];
 function handleCSVUpload(event) {
@@ -311,9 +331,9 @@ const rendered = {};
 function init() { Object.keys(rendered).forEach(k => delete rendered[k]); rendered['overview'] = true; renderKPIs(); renderOverviewCharts(); }
 
 function switchTab(name) {
-  document.querySelectorAll('.tab').forEach((t,i)=>{ const names=['overview','people','orgchart','tenure']; t.classList.toggle('active', names[i]===name); });
+  document.querySelectorAll('.tab').forEach((t,i)=>{ const names=['overview','people','orgchart','tenure','turnover']; t.classList.toggle('active', names[i]===name); });
   document.querySelectorAll('.panel').forEach(p=>{ p.classList.toggle('active', p.id==='panel-'+name); });
-  if (!rendered[name]) { rendered[name] = true; if(name==='overview')renderOverviewCharts(); if(name==='people')renderPeopleCharts(); if(name==='tenure')renderTenurePanel(); }
+  if (!rendered[name]) { rendered[name] = true; if(name==='overview')renderOverviewCharts(); if(name==='people')renderPeopleCharts(); if(name==='tenure')renderTenurePanel(); if(name==='turnover')renderTurnoverPanel(); }
 }
 
 function renderKPIs() {
@@ -372,6 +392,51 @@ function renderTenurePanel() {
 function count(arr, field) { const r={}; arr.forEach(e=>{ const k=e[field]; r[k]=(r[k]||0)+1; }); return r; }
 
 const baseOpts = { responsive: true, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e2029', borderColor: '#2a2d3a', borderWidth: 1, titleColor: '#e8eaf0', bodyColor: '#6b7080', padding: 10 } }, scales: { x: { grid: { color:'#2a2d3a' }, ticks: { color:'#6b7080', font:{family:'DM Sans',size:11} } }, y: { grid: { color:'#2a2d3a' }, ticks: { color:'#6b7080', font:{family:'DM Sans',size:11} } } } };
+
+
+function renderTurnoverPanel() {
+  const S = EMPLOYEES.length > 0 ? computeStats() : STATS;
+  const rt = S.rollingTurnover || {};
+  const at = S.annualTurnover || {};
+  document.getElementById('tv-rolling').textContent = (rt.rate || 0) + '%';
+  document.getElementById('tv-resigned12').textContent = rt.resigned12m || 0;
+  document.getElementById('tv-currentft').textContent = rt.currentFT || 0;
+  const years = Object.keys(at).sort();
+  const latestYr = years[years.length-1];
+  document.getElementById('tv-latest').textContent = latestYr ? (at[latestYr].rate + '%') : '—';
+
+  // Annual rate bar chart
+  const rateVals = years.map(y => at[y].rate);
+  const rateColors = rateVals.map(v => v > 15 ? '#f07a7a' : v > 10 ? '#f0c87a' : '#7bc8f0');
+  charts.turnoverAnnual = new Chart(document.getElementById('chart-turnover-annual'), {
+    type: 'bar',
+    data: { labels: years, datasets: [{ label: 'Turnover Rate (%)', data: rateVals, backgroundColor: rateColors, borderRadius: 4, barPercentage: 0.6 }] },
+    options: { ...baseOpts, plugins: { ...baseOpts.plugins, tooltip: { callbacks: { label: ctx => ctx.parsed.y + '%' } } }, scales: { x: { grid:{color:'#2a2d3a'}, ticks:{color:'#6b7080',font:{family:'DM Sans',size:12}} }, y: { grid:{color:'#2a2d3a'}, ticks:{color:'#6b7080',font:{family:'DM Sans',size:11},callback:v=>v+'%'}, suggestedMax: Math.max(...rateVals)+5 } } }
+  });
+
+  // Counts chart
+  const headcounts = years.map(y => at[y].headcount);
+  const resigneds = years.map(y => at[y].resigned);
+  charts.turnoverCounts = new Chart(document.getElementById('chart-turnover-counts'), {
+    type: 'bar',
+    data: { labels: years, datasets: [
+      { label: 'FT Headcount', data: headcounts, backgroundColor: '#3a4060', borderRadius: 4, barPercentage: 0.7 },
+      { label: 'Resigned', data: resigneds, backgroundColor: '#f07a7a', borderRadius: 4, barPercentage: 0.7 }
+    ]},
+    options: { ...baseOpts, plugins: { ...baseOpts.plugins, legend: { display: true, labels: { color: '#6b7080', font: { family: 'DM Sans', size: 11 } } } }, scales: baseOpts.scales }
+  });
+
+  // Trend note
+  const trend = years.length >= 2 ? at[years[years.length-1]].rate - at[years[years.length-2]].rate : 0;
+  const trendStr = trend > 0 ? '+' + trend.toFixed(1) + '% vs prior year' : trend.toFixed(1) + '% vs prior year';
+  const rollingNote = rt.rate > 15 ? 'Rolling rate is above 15% — consider reviewing retention drivers.' : rt.rate > 10 ? 'Rolling rate is moderate (10–15%). Monitor closely.' : 'Rolling rate is healthy (below 10%).';
+  document.getElementById('turnover-notes').innerHTML = `
+    <p style="margin:0 0 10px"><strong style="color:var(--accent)">Annual trend:</strong> ${trendStr}</p>
+    <p style="margin:0 0 10px"><strong style="color:var(--accent)">Rolling 12-month:</strong> ${rt.rate}% — ${rt.resigned12m} FT departures out of ${rt.currentFT} current FT staff.</p>
+    <p style="margin:0"><strong style="color:var(--accent)">Note:</strong> ${rollingNote}</p>
+    <p style="margin:10px 0 0;font-size:12px;color:var(--muted)">Annual rate = resignations ÷ FT employees active at any point in that year. 2026 is partial-year (YTD Jul).</p>
+  `;
+}
 
 function makeBar(id, labels, data, colors, horizontal=false) {
   const ctx = document.getElementById(id); if(!ctx) return null;
