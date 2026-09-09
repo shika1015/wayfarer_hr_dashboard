@@ -117,11 +117,11 @@
     <div class="logo">Wayfarer <span>HR Intelligence</span></div>
     <div class="data-badge">
       <div class="dot"></div>
-      <span id="dataSource">SmartHR · 2026/07/16</span>
+      <span id="dataSource">SmartHR · 2026/09/09</span>
     </div>
   </div>
   <div style="display:flex;gap:10px;align-items:center;">
-    <span class="last-update" id="lastUpdate">148 active employees loaded</span>
+    <span class="last-update" id="lastUpdate">162 active employees loaded</span>
     <button class="upload-btn" onclick="document.getElementById('fileInput').click()">↑ Upload New CSV</button>
     <input type="file" id="fileInput" accept=".csv" onchange="handleCSVUpload(event)">
   </div>
@@ -217,7 +217,7 @@
 <div class="panel" id="panel-turnover">
   <div class="page-header"><div class="page-header-text"><h2>FT Turnover</h2><p>Full-time & executive employee attrition — annual rates and rolling 12-month view</p></div></div>
   <div class="stats-row">
-    <div class="stat-card r"><div class="stat-label">Rolling 12-Month Rate</div><div class="stat-value" id="tv-rolling">—</div><div class="stat-sub">Jul 2025 – Jul 2026</div></div>
+    <div class="stat-card r"><div class="stat-label">Rolling 12-Month Rate</div><div class="stat-value" id="tv-rolling">—</div><div class="stat-sub">Sep 2025 – Sep 2026</div></div>
     <div class="stat-card y"><div class="stat-label">FT Resigned (12mo)</div><div class="stat-value" id="tv-resigned12">—</div><div class="stat-sub">Full-time departures</div></div>
     <div class="stat-card b"><div class="stat-label">Current FT Headcount</div><div class="stat-value" id="tv-currentft">—</div><div class="stat-sub">Active 正社員 + 役員</div></div>
     <div class="stat-card g"><div class="stat-label">Latest Annual Rate</div><div class="stat-value" id="tv-latest">—</div><div class="stat-sub">2026 YTD</div></div>
@@ -235,9 +235,9 @@
 
 <script>
 // =====================================================================
-// DATA — Updated 2026/06/02 from SmartHR export
+// DATA — Updated 2026/09/09 from SmartHR export
 // =====================================================================
-const STATS = {"kpi": {"total": 148, "fullTime": 83, "ftPct": "56%", "partContract": 65, "ptPct": "44%", "avgTenure": 20, "avgAge": 32}, "empType": {"Full-Time": 81, "Executive": 2, "Part-Time": 49, "Contract": 14, "Dispatch": 2}, "location": {"Kyoto Office": 24, "Kyoto Hotel(s)": 69, "Tokyo HQ": 9, "Osaka Hotel(s)": 19, "Tokyo Hotel(s)": 7, "Kabin Kyoto": 7, "GRZE (Cafe)": 1}, "hireByYear": {"2021": 8, "2022": 4, "2023": 21, "2024": 34, "2025": 47, "2026": 34}, "functionSplit": {"Operations": 106, "Indirect Overhead": 39}, "deptTop": {"Lans": 106, "Andrea": 17, "Javier": 9, "Executive Office": 6, "Mike": 6, "Shika": 2, "Tokyo HQ": 1}, "nationality": {"Japan 🇯🇵": 31, "Philippines 🇵🇭": 13, "USA 🇺🇸": 11, "France 🇫🇷": 8, "Argentina 🇦🇷": 5, "Chile 🇨🇱": 5, "India 🇮🇳": 5, "Sri Lanka 🇱🇰": 5, "Pakistan 🇵🇰": 4, "Italy 🇮🇹": 3, "Bangladesh 🇧🇩": 3, "Uganda 🇺🇬": 3, "Spain 🇪🇸": 3, "Ethiopia 🇪🇹": 3, "Mexico 🇲🇽": 3, "China 🇨🇳": 3, "Germany 🇩🇪": 3, "Indonesia 🇮🇩": 3, "Canada 🇨🇦": 2, "UK 🇬🇧": 2, "Nepal 🇳🇵": 2, "Thailand 🇹🇭": 2, "Peru 🇵🇪": 2, "Madagascar 🇲🇬": 2, "Nigeria 🇳🇬": 2, "Netherlands 🇳🇱": 2, "Cameroon 🇨🇲": 2, "Taiwan 🇹🇼": 1, "Hungary 🇭🇺": 1, "Venezuela 🇻🇪": 1, "Portugal 🇵🇹": 1, "Poland 🇵🇱": 1, "New Zealand 🇳🇿": 1, "Singapore 🇸🇬": 1, "Kenya 🇰🇪": 1, "Slovakia 🇸🇰": 1, "Ukraine 🇺🇦": 1, "Turkey 🇹🇷": 1, "Rwanda 🇷🇼": 1, "Ghana 🇬🇭": 1, "Brazil 🇧🇷": 1, "Australia 🇦🇺": 1, "Other": 1}, "dept2": {"Indirect Overhead": 45, "Kabin(s) Cluster 1": 25, "Kabin(s) Cluster 2": 18, "WHKS Cluster": 13, "Kabin Kyoto": 12, "Osaka(s)": 10, "Tokyo Cluster": 5, "Wayfarer Matsu": 5}, "role2": {"OP - Accommodation": 94, "IO - Finance": 10, "IO - IT": 10, "IO - Marketing": 7, "OP - KRFT CAFE": 5, "IO - TXP": 4, "OP - KRFT BAR": 4, "IO - Revenue": 3, "IO - People": 3, "OP - GRZE": 2}, "dept2All": {"Indirect Overhead": 45, "Kabin(s) Cluster 2": 18, "Kabin(s) Cluster 1": 25, "Osaka(s)": 10, "Kabin Kyoto": 12, "Tokyo Cluster": 5, "WHKS Cluster": 13, "Kabin(s)": 2, "Wayfarer Matsu": 5, "KRFT (Coffee)": 2, "Kabin Machi": 2, "Wayfarer Shinsaibashi": 4, "Kabin Taka": 1, "KRFT (Bar)": 2}, "ageBuckets": {"<25": 17, "25-29": 41, "30-34": 45, "35-39": 26, "40-44": 10, "45-49": 3, "50+": 6}, "tenureKpi": {"new": 32, "dev": 60, "est": 47, "sen": 9, "median": 17}, "tenureCohort": {"0-6mo": 32, "6-24mo": 60, "2-4yr": 47, "4+yr": 9}, "hireRecent": {"2025-01": 6, "2025-02": 2, "2025-03": 2, "2025-04": 4, "2025-05": 5, "2025-06": 4, "2025-07": 3, "2025-08": 2, "2025-09": 2, "2025-10": 2, "2025-11": 6, "2025-12": 9, "2026-01": 2, "2026-02": 3, "2026-03": 5, "2026-04": 9, "2026-05": 8, "2026-06": 4, "2026-07": 3}, "natCount": 43, "totalEver": 148, "annualTurnover": {"2021": {"resigned": 4, "headcount": 19, "rate": 21.1}, "2022": {"resigned": 3, "headcount": 28, "rate": 10.7}, "2023": {"resigned": 7, "headcount": 68, "rate": 10.3}, "2024": {"resigned": 10, "headcount": 98, "rate": 10.2}, "2025": {"resigned": 8, "headcount": 113, "rate": 7.1}, "2026": {"resigned": 8, "headcount": 118, "rate": 6.8}}, "rollingTurnover": {"resigned12m": 10, "currentFT": 83, "rate": 12.0}};
+const STATS = {"kpi": {"total": 162,"fullTime": 83,"ftPct": "51%","partContract": 79,"ptPct": "49%","avgTenure": 20,"avgAge": 32},"empType": {"Full-Time": 81,"Executive": 2,"Part-Time": 59,"Contract": 18,"Dispatch": 2},"location": {"Kyoto Hotel(s)": 68,"Kyoto Office": 25,"Osaka Hotel(s)": 24,"Tokyo HQ": 18,"Kabin Kyoto": 8,"Tokyo Hotel(s)": 2,"GRZE (Cafe)": 1,"Kabin(s) Cluster 2": 1,"Oversea": 1},"hireByYear": {"2020": 2,"2021": 8,"2022": 4,"2023": 21,"2024": 33,"2025": 43,"2026": 50},"functionSplit": {"Operations": 116,"Indirect Overhead": 41},"deptTop": {"Lans": 119,"Andrea": 18,"Javier": 9,"Executive Office": 6,"Mike": 6,"Shika": 2,"Tokyo HQ": 1},"nationality": {"Japan 🇯🇵": 36,"Philippines 🇵🇭": 13,"France 🇫🇷": 9,"USA 🇺🇸": 9,"Argentina 🇦🇷": 8,"India 🇮🇳": 6,"Sri Lanka 🇱🇰": 6,"Chile 🇨🇱": 5,"Mexico 🇲🇽": 4,"Germany 🇩🇪": 4,"Pakistan 🇵🇰": 4,"Italy 🇮🇹": 3,"Bangladesh 🇧🇩": 3,"Uganda 🇺🇬": 3,"Spain 🇪🇸": 3,"Ethiopia 🇪🇹": 3,"China 🇨🇳": 3,"Indonesia 🇮🇩": 3,"Nigeria 🇳🇬": 3,"Canada 🇨🇦": 2,"UK 🇬🇧": 2,"Nepal 🇳🇵": 2,"Thailand 🇹🇭": 2,"Peru 🇵🇪": 2,"Madagascar 🇲🇬": 2,"Kenya 🇰🇪": 2,"Poland 🇵🇱": 2,"Netherlands 🇳🇱": 2,"Cameroon 🇨🇲": 2,"Taiwan 🇹🇼": 1,"Hungary 🇭🇺": 1,"Venezuela 🇻🇪": 1,"Portugal 🇵🇹": 1,"New Zealand 🇳🇿": 1,"Singapore 🇸🇬": 1,"Slovakia 🇸🇰": 1,"Turkey 🇹🇷": 1,"Rwanda 🇷🇼": 1,"Ghana 🇬🇭": 1,"Brazil 🇧🇷": 1,"Australia 🇦🇺": 1,"South Korea 🇰🇷": 1,"Vietnam 🇻🇳": 1},"dept2": {"Indirect Overhead": 47,"Kabin(s) Cluster 1": 25,"Kabin(s) Cluster 2": 18,"Kabin Kyoto": 13,"Osaka(s)": 12,"WHKS Cluster": 12,"Tokyo Cluster": 8,"Wayfarer Shinsaibashi": 6},"role2": {"OP - Accommodation": 104,"IO - IT": 11,"IO - Finance": 10,"IO - Marketing": 7,"OP - KRFT CAFE": 5,"IO - TXP": 4,"OP - KRFT BAR": 4,"IO - Revenue": 3,"IO - People": 3,"IO - Management": 2},"dept2All": {"Indirect Overhead": 47,"Kabin(s) Cluster 1": 25,"Kabin(s) Cluster 2": 18,"Kabin Kyoto": 13,"Osaka(s)": 12,"WHKS Cluster": 12,"Tokyo Cluster": 8,"Wayfarer Shinsaibashi": 6,"Wayfarer Matsu": 5,"Kabin Taka": 4,"Kabin Machi": 2,"KRFT (Bar)": 2,"KRFT (Coffee)": 2,"Kabin(s)": 1},"ageBuckets": {"<25": 19,"25-29": 48,"30-34": 49,"35-39": 24,"40-44": 10,"45-49": 3,"50+": 6},"tenureKpi": {"new": 41,"dev": 58,"est": 50,"sen": 12,"median": 16},"tenureCohort": {"0-6mo": 41,"6-24mo": 58,"2-4yr": 50,"4+yr": 12},"hireRecent": {"2025-01": 5,"2025-02": 2,"2025-03": 2,"2025-04": 3,"2025-05": 5,"2025-06": 4,"2025-07": 3,"2025-08": 2,"2025-09": 2,"2025-10": 2,"2025-11": 5,"2025-12": 8,"2026-01": 3,"2026-02": 2,"2026-03": 5,"2026-04": 9,"2026-05": 8,"2026-06": 3,"2026-07": 5,"2026-08": 11,"2026-09": 4},"natCount": 43,"totalEver": 162,"annualTurnover": {"2021": {"resigned": 4,"headcount": 15,"rate": 26.7},"2022": {"resigned": 3,"headcount": 22,"rate": 13.6},"2023": {"resigned": 7,"headcount": 62,"rate": 11.3},"2024": {"resigned": 10,"headcount": 91,"rate": 11.0},"2025": {"resigned": 8,"headcount": 103,"rate": 7.8},"2026": {"resigned": 10,"headcount": 111,"rate": 9.0}},"rollingTurnover": {"resigned12m": 13,"currentFT": 83,"rate": 15.7}};
 
 let EMPLOYEES = [];
 function handleCSVUpload(event) {
@@ -263,8 +263,8 @@ function parseCSV(text) {
   text = text.replace(/^﻿/,'');
   const lines = text.trim().split('\n');
   const headers = lines[0].split(',');
-  const today = new Date(2026,5,2);
-  const ISO_NAT = {'':'Japan 🇯🇵','032':'Argentina 🇦🇷','050':'Bangladesh 🇧🇩','120':'Cameroon 🇨🇲','124':'Canada 🇨🇦','144':'Sri Lanka 🇱🇰','152':'Chile 🇨🇱','156':'China 🇨🇳','158':'Taiwan 🇹🇼','231':'Ethiopia 🇪🇹','250':'France 🇫🇷','276':'Germany 🇩🇪','348':'Hungary 🇭🇺','356':'India 🇮🇳','360':'Indonesia 🇮🇩','380':'Italy 🇮🇹','450':'Madagascar 🇲🇬','484':'Mexico 🇲🇽','524':'Nepal 🇳🇵','566':'Nigeria 🇳🇬','586':'Pakistan 🇵🇰','604':'Peru 🇵🇪','608':'Philippines 🇵🇭','620':'Portugal 🇵🇹','724':'Spain 🇪🇸','764':'Thailand 🇹🇭','800':'Uganda 🇺🇬','826':'UK 🇬🇧','840':'USA 🇺🇸','862':'Venezuela 🇻🇪'};
+  const today = new Date(2026,8,9);
+  const ISO_NAT = {'':'Japan 🇯🇵','032':'Argentina 🇦🇷','036':'Australia 🇦🇺','050':'Bangladesh 🇧🇩','076':'Brazil 🇧🇷','120':'Cameroon 🇨🇲','124':'Canada 🇨🇦','144':'Sri Lanka 🇱🇰','152':'Chile 🇨🇱','156':'China 🇨🇳','158':'Taiwan 🇹🇼','231':'Ethiopia 🇪🇹','250':'France 🇫🇷','276':'Germany 🇩🇪','288':'Ghana 🇬🇭','348':'Hungary 🇭🇺','356':'India 🇮🇳','360':'Indonesia 🇮🇩','380':'Italy 🇮🇹','404':'Kenya 🇰🇪','410':'South Korea 🇰🇷','450':'Madagascar 🇲🇬','484':'Mexico 🇲🇽','524':'Nepal 🇳🇵','528':'Netherlands 🇳🇱','554':'New Zealand 🇳🇿','566':'Nigeria 🇳🇬','586':'Pakistan 🇵🇰','604':'Peru 🇵🇪','608':'Philippines 🇵🇭','616':'Poland 🇵🇱','620':'Portugal 🇵🇹','646':'Rwanda 🇷🇼','702':'Singapore 🇸🇬','703':'Slovakia 🇸🇰','704':'Vietnam 🇻🇳','724':'Spain 🇪🇸','764':'Thailand 🇹🇭','792':'Turkey 🇹🇷','800':'Uganda 🇺🇬','826':'UK 🇬🇧','840':'USA 🇺🇸','862':'Venezuela 🇻🇪'};
   return lines.slice(1).map(line => {
     const vals = line.split(',');
     const obj = {};
@@ -276,6 +276,7 @@ function parseCSV(text) {
     let tenureMonths = 0, age = 0;
     if (joinStr) { const d = new Date(joinStr.replace(/\//g,'-')); tenureMonths = (today.getFullYear()-d.getFullYear())*12+(today.getMonth()-d.getMonth()); }
     if (birthStr) { const b = new Date(birthStr.replace(/\//g,'-')); age = today.getFullYear()-b.getFullYear() - ((today.getMonth()<b.getMonth()||(today.getMonth()===b.getMonth()&&today.getDate()<b.getDate()))?1:0); }
+    const natCode = obj[find('国籍コード')] || '';
     return {
       id: obj[find('社員')] || '', name: (obj['姓']||'') + ' ' + (obj['名']||''),
       dept1, dept2: obj[find('部署2')]||'', dept3: obj[find('部署3')]||'',
@@ -284,7 +285,7 @@ function parseCSV(text) {
       joinDate: joinStr, tenureMonths, age,
       deptTop: dept1.split('/').length>1 ? dept1.split('/')[1] : (dept1.split('/')[0]||'Other'),
       location: obj[find('部署3')]||'Unknown',
-      nationality: 'Japan 🇯🇵',
+      nationality: ISO_NAT[natCode] || 'Japan 🇯🇵',
     };
   }).filter(e => e.name.trim() && e.name.trim() !== 'undefined undefined' && e.dept1);
 }
@@ -309,22 +310,24 @@ function computeStats() {
   const t_new=tenures.filter(t=>t<6).length, t_dev=tenures.filter(t=>t>=6&&t<24).length, t_est=tenures.filter(t=>t>=24&&t<48).length, t_sen=tenures.filter(t=>t>=48).length;
   const sorted_t = [...tenures].sort((a,b)=>a-b);
   const recent={}; emp.filter(e=>e.joinDate&&e.joinDate>='2025').forEach(e=>{ const ym=e.joinDate.slice(0,7).replace('/','-'); if(ym>='2025-01')recent[ym]=(recent[ym]||0)+1; });
-  const d2={},r2={},d2all={},dt={},locRaw={};
+  const d2={},r2={},d2all={},dt={},locRaw={},natRaw={};
   emp.forEach(e=>{
-    if(e.dept2&&!e.dept2.includes('/')) d2[e.dept2]=(d2[e.dept2]||0)+1;
+    if(e.dept2&&e.dept2.startsWith('Code')){ const seg=e.dept2.split('/')[1]||e.dept2; d2[seg]=(d2[seg]||0)+1; d2all[seg]=(d2all[seg]||0)+1; }
     if(e.role2) r2[e.role2]=(r2[e.role2]||0)+1;
     if(e.deptTop&&e.deptTop!=='Other') dt[e.deptTop]=(dt[e.deptTop]||0)+1;
-    if(e.location&&e.location!=='Unknown') locRaw[e.location]=(locRaw[e.location]||0)+1;
+    if(e.location&&e.location.startsWith('Code')){ const seg=e.location.split('/')[1]||e.location; locRaw[seg]=(locRaw[seg]||0)+1; }
+    if(e.nationality) natRaw[e.nationality]=(natRaw[e.nationality]||0)+1;
   });
   return {
     kpi:{total,fullTime:ft+ex,ftPct:Math.round((ft+ex)/total*100)+'%',partContract:pt,ptPct:Math.round(pt/total*100)+'%',avgTenure,avgAge},
     empType:count(emp,'empType'), location:locRaw, hireByYear:Object.fromEntries(Object.entries(hireByYear).sort()),
     functionSplit:{Operations:ops,'Indirect Overhead':io}, deptTop:Object.fromEntries(Object.entries(dt).sort((a,b)=>b[1]-a[1]).slice(0,7)),
-    nationality:STATS.nationality, dept2:Object.fromEntries(Object.entries(d2).sort((a,b)=>b[1]-a[1]).slice(0,8)),
+    nationality:Object.fromEntries(Object.entries(natRaw).sort((a,b)=>b[1]-a[1])), dept2:Object.fromEntries(Object.entries(d2).sort((a,b)=>b[1]-a[1]).slice(0,8)),
     role2:Object.fromEntries(Object.entries(r2).filter(x=>x[0]).sort((a,b)=>b[1]-a[1]).slice(0,10)),
-    dept2All:d2, ageBuckets, tenureKpi:{new:t_new,dev:t_dev,est:t_est,sen:t_sen,median:sorted_t[Math.floor(sorted_t.length/2)]||0},
+    dept2All:d2all, ageBuckets, tenureKpi:{new:t_new,dev:t_dev,est:t_est,sen:t_sen,median:sorted_t[Math.floor(sorted_t.length/2)]||0},
     tenureCohort:{'0-6mo':t_new,'6-24mo':t_dev,'2-4yr':t_est,'4+yr':t_sen},
-    hireRecent:Object.fromEntries(Object.entries(recent).sort()), natCount:42, totalEver:total
+    hireRecent:Object.fromEntries(Object.entries(recent).sort()), natCount:Object.keys(natRaw).length, totalEver:total,
+    annualTurnover: STATS.annualTurnover, rollingTurnover: STATS.rollingTurnover
   };
 }
 
@@ -363,7 +366,7 @@ function renderOverviewCharts() {
   charts.hire = makeBar('chart-hire', Object.keys(S.hireByYear), Object.values(S.hireByYear), '#7bc8f0');
   charts.function = makeDoughnut('chart-function', Object.keys(S.functionSplit), Object.values(S.functionSplit), ['#c8f07a','#7bc8f0','#f0c87a']);
   charts.depts = makeBar('chart-depts', Object.keys(S.deptTop), Object.values(S.deptTop), PALETTE);
-  renderNationality();
+  renderNationality(S);
 }
 
 function renderPeopleCharts() {
@@ -438,7 +441,7 @@ function renderTurnoverPanel() {
     <p style="margin:0 0 10px"><strong style="color:var(--accent)">Annual trend:</strong> ${trendStr}</p>
     <p style="margin:0 0 10px"><strong style="color:var(--accent)">Rolling 12-month:</strong> ${rt.rate}% — ${rt.resigned12m} FT departures out of ${rt.currentFT} current FT staff.</p>
     <p style="margin:0"><strong style="color:var(--accent)">Note:</strong> ${rollingNote}</p>
-    <p style="margin:10px 0 0;font-size:12px;color:var(--muted)">Annual rate = resignations ÷ FT employees active at any point in that year. 2026 is partial-year (YTD Jul).</p>
+    <p style="margin:10px 0 0;font-size:12px;color:var(--muted)">Annual rate = resignations ÷ FT employees active at any point in that year. 2026 is partial-year (YTD Sep).</p>
   `;
 }
 
@@ -456,8 +459,8 @@ function makeDoughnut(id, labels, data, colors) {
   try { return new Chart(ctx, { type: 'doughnut', data: { labels, datasets: [{ data, backgroundColor: colorArr, borderWidth: 0, hoverOffset: 4 }] }, options: { responsive: true, cutout: '65%', plugins: { legend: { display: true, position: 'bottom', labels: { color:'#6b7080', font:{family:'DM Sans',size:11}, padding:12, boxWidth:10 } }, tooltip: baseOpts.plugins.tooltip } } }); } catch(e){ return null; }
 }
 
-function renderNationality() {
-  const natCount = STATS.nationality || {};
+function renderNationality(S) {
+  const natCount = (S && S.nationality) ? S.nationality : STATS.nationality;
   const sorted = Object.entries(natCount).sort((a,b)=>b[1]-a[1]);
   const total = Object.values(natCount).reduce((a,b)=>a+b,0);
   const maxVal = sorted[0][1];
